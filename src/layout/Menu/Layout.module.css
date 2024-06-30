@@ -1,0 +1,65 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-right: 1px solid var(--separator-color);
+}
+
+.exit {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.link:hover {
+  color: var(--primary-color);
+}
+
+.active {
+  color: var(--primary-color);
+}
+
+.user {
+  margin-bottom: 46px;
+}
+
+.name {
+  font-size: 20px;
+  color: var(--text-color);
+}
+
+.email {
+  font-size: 14px;
+  color: var(--text-secondary-color);
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.content {
+  padding: 40px 60px;
+  width: 100%;
+}

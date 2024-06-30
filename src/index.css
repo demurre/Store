@@ -1,0 +1,14 @@
+:root {
+  --font: "Poppins", sans-serif;
+  --primary-color: #fe724c;
+  --primary-hover-color: #d25937;
+  --text-color: #212121;
+  --text-secondary-color: #5b5b5e;
+  --white-color: #ffffff;
+  --separator-color: #d4d6e0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
