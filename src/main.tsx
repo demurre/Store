@@ -10,14 +10,19 @@ import { PREFIX } from "./helpers/API.ts";
 import axios from "axios";
 import { AuthLayout } from "./layout/Auth/AuthLayout.tsx";
 import { Login } from "./pages/Login/Login.tsx";
-import { Register } from "./pages/Register/Register.tsx";
+import { RequireAuth } from "./helpers/RequireAuth.tsx";
+import { UserProvider } from "./providers/UserProvider.tsx";
 
 const Menu = lazy(() => import("./pages/Menu/Menu.tsx"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <RequireAuth>
+        <Layout />
+      </RequireAuth>
+    ),
     children: [
       {
         path: "/",
@@ -27,9 +32,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
-
       { path: "/cart", element: <Cart /> },
-
       {
         path: "/product/:id",
         element: <Product />,
@@ -49,16 +52,11 @@ const router = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "/auth",
     element: <AuthLayout />,
-    children: [
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-    ],
+    children: [{ path: "login", element: <Login /> }],
   },
-
   {
     path: "*",
     element: <ErrorPage />,
@@ -67,6 +65,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
