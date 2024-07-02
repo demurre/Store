@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Headling from "../../components/Headling/Headling";
 import Search from "../../components/Search/Search";
 import { Product } from "../../interfaces/product.interface";
@@ -11,6 +11,11 @@ export function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
+  const [filter, setFilter] = useState<string>("");
+
+  useEffect(() => {
+    getMenu();
+  }, []);
 
   const getMenu = async () => {
     try {
@@ -24,24 +29,32 @@ export function Menu() {
         setError(e.message);
       }
       setIsLoading(false);
-      return;
     }
   };
 
-  useEffect(() => {
-    getMenu();
-  }, []);
+  const updateFilter = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    [product.title, product.description, product.category].some((field) =>
+      field.toLowerCase().includes(filter.toLowerCase())
+    )
+  );
 
   return (
     <>
       <div className={styles["head"]}>
         <Headling>Menu</Headling>
-        <Search placeholder="Enter item" />
+        <Search placeholder="Enter item" onChange={updateFilter} />
       </div>
       <div>
         {error && <>{error}</>}
-        {!isLoading && <MenuList products={products} />}
         {isLoading && <>Loading...</>}
+        {!isLoading && filteredProducts.length > 0 && (
+          <MenuList products={filteredProducts} />
+        )}
+        {!isLoading && filteredProducts.length === 0 && <>Not found</>}
       </div>
     </>
   );

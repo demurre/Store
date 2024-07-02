@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styles from "./AuthLayout.module.css";
-import { UserInfo } from "../../hooks/use-session";
+import { UserInfo } from "../../hooks/useSession";
 import { createContext } from "react";
 
 export const UserContext = createContext<UserInfo>({

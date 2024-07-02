@@ -46,10 +46,10 @@ export function useSession(): UserInfo {
       setChannel(null);
     }
 
-    // return () => {
-    //   channel?.unsubscribe();
-    //   setChannel(null);
-    // };
+    return () => {
+      channel?.unsubscribe();
+      setChannel(null);
+    };
   }, [userInfo.session]);
 
   async function listenToUserProfileChanges(userId: string) {
