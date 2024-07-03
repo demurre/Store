@@ -6,10 +6,16 @@ import { supaClient } from "../../config/supa-client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import {
+  faBars,
+  faCartShopping,
+  faPowerOff,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Layout() {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState();
   const items = useSelector((s: RootState) => s.cart.items);
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export function Layout() {
                 })
               }
             >
-              <img src="/menu-icon.svg" alt="menu" />
+              <FontAwesomeIcon icon={faBars} />
               Menu
             </NavLink>
             <NavLink
@@ -66,7 +72,7 @@ export function Layout() {
                 })
               }
             >
-              <img src="/cart-icon.svg" alt="cart" />
+              <FontAwesomeIcon icon={faCartShopping} />
               Cart
               <span className={styles["cart-count"]}>
                 {items.reduce((acc, item) => (acc += item.count), 0)}
@@ -74,7 +80,7 @@ export function Layout() {
             </NavLink>
           </div>
           <Button className={styles["exit"]} onClick={logout}>
-            <img src="/exit-icon.svg" alt="exit" /> Exit
+            <FontAwesomeIcon icon={faPowerOff} /> Exit
           </Button>
         </div>
         <div className={styles["content"]}>

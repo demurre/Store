@@ -5,6 +5,8 @@ import { MouseEvent } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispath } from "../../store/store";
 import { cartActions } from "../../store/cart.slice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 
 function ProductCard(props: ProductCardProps) {
   const dispatch = useDispatch<AppDispath>();
@@ -25,11 +27,14 @@ function ProductCard(props: ProductCardProps) {
             {props.price} &nbsp;<span className={styles["currency"]}>$</span>
           </div>
           <button className={styles["add-to-cart"]} onClick={add}>
-            <img src="/cart-button-icon.svg" alt="add to cart" />
+            <FontAwesomeIcon
+              style={{ color: "var(--white-color)" }}
+              icon={faBasketShopping}
+            />
           </button>
           <div className={styles["rating"]}>
             {props.rating} &nbsp;
-            <img src="/star-icon.svg" alt="star" />
+            <FontAwesomeIcon style={{ color: "#ffc529" }} icon={faStar} />
           </div>
         </div>
         <div className={styles["footer"]}>

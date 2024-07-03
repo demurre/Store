@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { AppDispath } from "../../store/store";
 import { cartActions } from "../../store/cart.slice";
 import { CartItemProps } from "./CartItem.props";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function CartItem(props: CartItemProps) {
   const dispatch = useDispatch<AppDispath>();
@@ -31,14 +33,23 @@ function CartItem(props: CartItemProps) {
       </div>
       <div className={styles["actions"]}>
         <button className={styles["minus"]} onClick={descrease}>
-          <img src="/minus-icon.svg" alt="Delete from cart" />
+          <FontAwesomeIcon
+            style={{ color: "var(--primary-color)" }}
+            icon={faMinus}
+          />
         </button>
         <div className={styles["number"]}>{props.count}</div>
         <button className={styles["plus"]} onClick={increase}>
-          <img src="/plus-icon.svg" alt="Add to cart" />
+          <FontAwesomeIcon
+            style={{ color: "var(--white-color)" }}
+            icon={faPlus}
+          />
         </button>
         <button className={styles["remove"]} onClick={remove}>
-          <img src="/delete-icon.svg" alt="Delete all" />
+          <FontAwesomeIcon
+            style={{ color: "var(--primary-color)" }}
+            icon={faXmark}
+          />
         </button>
       </div>
     </div>

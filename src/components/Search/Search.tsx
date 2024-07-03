@@ -2,6 +2,8 @@ import { forwardRef } from "react";
 import styles from "./Search.module.css";
 import cn from "classnames";
 import { SearchProps } from "./Search.props";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Search = forwardRef<HTMLInputElement, SearchProps>(function Input(
   { isValid = true, className, ...props },
@@ -16,7 +18,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(function Input(
         })}
         {...props}
       />
-      <img className={styles["icon"]} src="/search-icon.svg" alt="search" />
+      <FontAwesomeIcon className={styles["icon"]} icon={faMagnifyingGlass} />
     </div>
   );
 });

@@ -5,14 +5,14 @@ import cn from "classnames";
 function Button({
   children,
   className,
-  appearance = "small",
+  appearence = "small",
   ...props
 }: ButtonProps) {
   return (
     <button
       className={cn(styles["button"], styles["accent"], className, {
-        [styles["small"]]: appearance === "small",
-        [styles["big"]]: appearance === "big",
+        [styles["small"]]: appearence === "small",
+        [styles["big"]]: appearence === "big",
       })}
       {...props}
     >

@@ -48,7 +48,7 @@
   bottom: -12px;
   left: 15px;
   background: var(--white-color);
-  color: #111719;
+  color: var(--text-color);
   padding: 3px 8px;
   border-radius: 20px;
   font-size: 12px;
