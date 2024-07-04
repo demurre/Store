@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { supaClient } from "../../config/supa-client";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { Session } from "@supabase/supabase-js";
 
 export function Login() {
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
     supaClient.auth.getSession().then(({ data: { session } }) => {

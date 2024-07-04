@@ -15,14 +15,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function Layout() {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState();
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
   const items = useSelector((s: RootState) => s.cart.items);
 
   useEffect(() => {
     const fetchUser = async () => {
       const {
         data: { user },
-        error,
       } = await supaClient.auth.getUser();
       if (user) {
         setUserEmail(user.email);
