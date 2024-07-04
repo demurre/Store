@@ -10,11 +10,11 @@ import { PREFIX } from "./helpers/API.ts";
 import axios from "axios";
 import { AuthLayout } from "./layout/Auth/AuthLayout.tsx";
 import { Login } from "./pages/Login/Login.tsx";
-import { RequireAuth } from "./helpers/RequireAuth.tsx";
 import { UserProvider } from "./providers/UserProvider.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import { Success } from "./pages/Success/Success.tsx";
+import RequireAuth from "./helpers/RequireAuth.tsx";
 
 const Menu = lazy(() => import("./pages/Menu/Menu.tsx"));
 

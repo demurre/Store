@@ -53,12 +53,9 @@ export function Product() {
                   </div>
                 </div>
                 <hr className={styles.hr} />
-                <div className={styles.description}>
-                  Description <br />
-                  {data.description}
-                </div>
+                <div className={styles.description}>{data.description}</div>
                 <Button onClick={(e) => add(e, data.id)}>
-                  Add to cart
+                  Add to cart &nbsp;
                   <FontAwesomeIcon
                     style={{ color: "var(--white-color)" }}
                     icon={faBasketShopping}

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styles from "./AuthLayout.module.css";
-import { UserInfo } from "../../hooks/useSession";
 import { createContext } from "react";
+import { UserInfo } from "../../hooks/useSession";
 
 export const UserContext = createContext<UserInfo>({
   session: null,

@@ -27,7 +27,7 @@ export function Login() {
       <div className={styles["login"]}>
         <Auth
           supabaseClient={supaClient}
-          appearence={{
+          appearance={{
             theme: ThemeSupa,
             style: {
               button: {
