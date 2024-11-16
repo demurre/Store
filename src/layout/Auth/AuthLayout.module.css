@@ -17,3 +17,14 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 30px;
+  }
+}

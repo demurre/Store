@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export function Layout() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+  const [isSidebarOpen, setSidebarOpen] = useState(false); // State for sidebar
   const items = useSelector((s: RootState) => s.cart.items);
 
   useEffect(() => {
@@ -36,10 +37,21 @@ export function Layout() {
     navigate("/auth/login");
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
       <div className={styles["layout"]}>
-        <div className={styles["sidebar"]}>
+        <button className={styles["burger-btn"]} onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+        <div
+          className={cn(styles["sidebar"], {
+            [styles["responsive-sidebar"]]: !isSidebarOpen,
+          })}
+        >
           <div className={styles["user"]}>
             <img
               className={styles["avatar"]}

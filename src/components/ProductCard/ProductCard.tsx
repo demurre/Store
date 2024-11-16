@@ -37,12 +37,15 @@ function ProductCard(props: ProductCardProps) {
             <FontAwesomeIcon style={{ color: "#ffc529" }} icon={faStar} />
           </div>
         </div>
-        <div className={styles["footer"]}>
-          <div className={styles["title"]}>{props.title}</div>
-          <div className={styles["description"]}>{props.description}</div>
+        <div className={styles["card-content"]}>
+          <div className={styles["footer"]}>
+            <div className={styles["title"]}>{props.title}</div>
+            <div className={styles["description"]}>{props.description}</div>
+          </div>
         </div>
       </div>
     </Link>
   );
 }
+
 export default ProductCard;

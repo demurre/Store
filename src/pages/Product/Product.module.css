@@ -55,3 +55,9 @@
   margin: 0;
   border: 1px solid #f1f2f3;
 }
+
+@media (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
+}
