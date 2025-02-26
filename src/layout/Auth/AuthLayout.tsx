@@ -6,6 +6,9 @@ import { UserInfo } from "../../hooks/useSession";
 export const UserContext = createContext<UserInfo>({
   session: null,
   profile: null,
+  isLoading: true,
+  error: null,
+  refreshProfile: async () => {},
 });
 
 export function AuthLayout() {
