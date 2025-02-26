@@ -10,27 +10,31 @@ import {
   faBars,
   faCartShopping,
   faPowerOff,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSession } from "../../hooks/useSession";
 
 export function Layout() {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
-  const [isSidebarOpen, setSidebarOpen] = useState(false); // State for sidebar
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const items = useSelector((s: RootState) => s.cart.items);
+  const { session, profile } = useSession();
+
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>("user");
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supaClient.auth.getUser();
-      if (user) {
-        setUserEmail(user.email);
+    if (session?.user) {
+      if (profile?.username) {
+        setUsername(profile.username);
       }
-    };
 
-    fetchUser();
-  }, []);
+      if (profile?.image) {
+        setProfileImage(profile.image);
+      }
+    }
+  }, [session, profile]);
 
   const logout = async () => {
     await supaClient.auth.signOut();
@@ -41,11 +45,15 @@ export function Layout() {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  // Extract the first letter of the email or use a default character
-  const firstLetter = userEmail ? userEmail.charAt(0).toUpperCase() : "U";
-
-  // Generate the avatar URL using the first letter
-  const avatarUrl = `https://ui-avatars.com/api/?name=${firstLetter}&background=random&color=fff&size=256`;
+  const avatarUrl =
+    profileImage ||
+    (username && username !== "username"
+      ? `https://ui-avatars.com/api/?name=${username
+          .charAt(0)
+          .toUpperCase()}&background=random&color=fff&size=256`
+      : `https://ui-avatars.com/api/?name=${
+          session?.user?.email?.charAt(0).toUpperCase() || "U"
+        }&background=random&color=fff&size=256`);
 
   return (
     <>
@@ -59,15 +67,17 @@ export function Layout() {
           })}
         >
           <div className={styles["user"]}>
-            <img
-              className={styles["avatar"]}
-              src={avatarUrl}
-              alt="user"
-              width={100}
-              height={100}
-            />
-            <div className={styles["name"]}>user</div>
-            <div className={styles["email"]}>{userEmail}</div>
+            <NavLink to="/profile">
+              <img
+                className={styles["avatar"]}
+                src={avatarUrl}
+                alt="user-avatar"
+                width={100}
+                height={100}
+              />
+            </NavLink>
+            <div className={styles["name"]}>{username}</div>
+            <div className={styles["email"]}>{session?.user?.email}</div>
           </div>
           <div className={styles["menu"]}>
             <NavLink
@@ -80,6 +90,17 @@ export function Layout() {
             >
               <FontAwesomeIcon icon={faBars} />
               Menu
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                cn(styles["link"], {
+                  [styles.active]: isActive,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faUser} />
+              Profile
             </NavLink>
             <NavLink
               to="/cart"

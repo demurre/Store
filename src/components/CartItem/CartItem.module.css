@@ -76,3 +76,15 @@
   color: var(--text-color);
   font-size: 16px;
 }
+
+@media (max-width: 768px) {
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image {
+    min-width: 100%;
+    min-height: 200px;
+  }
+}
