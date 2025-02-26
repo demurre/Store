@@ -41,6 +41,12 @@ export function Layout() {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  // Extract the first letter of the email or use a default character
+  const firstLetter = userEmail ? userEmail.charAt(0).toUpperCase() : "U";
+
+  // Generate the avatar URL using the first letter
+  const avatarUrl = `https://ui-avatars.com/api/?name=${firstLetter}&background=random&color=fff&size=256`;
+
   return (
     <>
       <div className={styles["layout"]}>
@@ -55,7 +61,7 @@ export function Layout() {
           <div className={styles["user"]}>
             <img
               className={styles["avatar"]}
-              src="/user.png"
+              src={avatarUrl}
               alt="user"
               width={100}
               height={100}

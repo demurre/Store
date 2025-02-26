@@ -6,13 +6,13 @@ export function Success() {
   const navigate = useNavigate();
   return (
     <div className={styles["success"]}>
-      <img
+      {/* <img
         src="/user.png"
         alt="image"
         width={500}
         height={500}
         style={{ borderRadius: "50%" }}
-      />
+      /> */}
       <div className={styles["text"]}>
         Your order has been successfully placed!
       </div>
