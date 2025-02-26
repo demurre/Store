@@ -23,42 +23,42 @@ export function Login() {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (!session) {
-    return (
-      <div className={styles["login"]}>
-        <Auth
-          supabaseClient={supaClient}
-          appearance={{
-            theme: ThemeSupa,
-            style: {
-              button: {
-                borderRadius: "29px",
-                border: "none",
-              },
-              input: {
-                borderRadius: "10px",
-              },
-            },
-            variables: {
-              default: {
-                colors: {
-                  brand: "var(--primary-color)",
-                  brandAccent: "var(--primary-hover-color)",
-                },
-                fonts: {
-                  bodyFontFamily: `Poppins, sans-serif`,
-                  buttonFontFamily: `Poppins, sans-serif`,
-                  inputFontFamily: `Poppins, sans-serif`,
-                  labelFontFamily: `Poppins, sans-serif`,
-                },
-              },
-            },
-          }}
-          providers={[]}
-        />
-      </div>
-    );
-  } else {
+  if (session) {
     return <Navigate to="/" />;
   }
+
+  return (
+    <div className={styles["login"]}>
+      <Auth
+        supabaseClient={supaClient}
+        appearance={{
+          theme: ThemeSupa,
+          style: {
+            button: {
+              borderRadius: "29px",
+              border: "none",
+            },
+            input: {
+              borderRadius: "10px",
+            },
+          },
+          variables: {
+            default: {
+              colors: {
+                brand: "var(--primary-color)",
+                brandAccent: "var(--primary-hover-color)",
+              },
+              fonts: {
+                bodyFontFamily: `Poppins, sans-serif`,
+                buttonFontFamily: `Poppins, sans-serif`,
+                inputFontFamily: `Poppins, sans-serif`,
+                labelFontFamily: `Poppins, sans-serif`,
+              },
+            },
+          },
+        }}
+        providers={[]}
+      />
+    </div>
+  );
 }
