@@ -83,6 +83,7 @@
 .avatar {
   border-radius: 50%;
   margin-bottom: 20px;
+  object-fit: cover;
 }
 
 .cart-count {
