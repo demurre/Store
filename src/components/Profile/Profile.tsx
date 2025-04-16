@@ -202,7 +202,9 @@ export function Profile() {
       <Headling className={styles["headling"]}>Profile settings</Headling>
 
       {message && (
-        <div className={styles[`message-${message.type}`]}>{message.text}</div>
+        <div className={styles[`message-${message.type}`]} id="message">
+          {message.text}
+        </div>
       )}
 
       <div className={styles["profile-grid"]}>
@@ -312,6 +314,7 @@ export function Profile() {
             onClick={updateProfile}
             disabled={saving || uploading || !usernameAvailable}
             className={styles["save-button"]}
+            id="save-btn"
           >
             {saving ? (
               <>

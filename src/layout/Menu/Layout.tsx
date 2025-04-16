@@ -57,14 +57,19 @@ export function Layout() {
 
   return (
     <>
-      <div className={styles["layout"]}>
-        <button className={styles["burger-btn"]} onClick={toggleSidebar}>
+      <div className={styles["layout"]} data-test="shop-layout">
+        <button
+          className={styles["burger-btn"]}
+          onClick={toggleSidebar}
+          id="burger-btn"
+        >
           <FontAwesomeIcon icon={faBars} />
         </button>
         <div
           className={cn(styles["sidebar"], {
             [styles["responsive-sidebar"]]: !isSidebarOpen,
           })}
+          data-test="sidebar"
         >
           <div className={styles["user"]}>
             <NavLink to="/profile">
@@ -98,6 +103,7 @@ export function Layout() {
                   [styles.active]: isActive,
                 })
               }
+              id="profile"
             >
               <FontAwesomeIcon icon={faUser} />
               Profile
@@ -109,6 +115,7 @@ export function Layout() {
                   [styles.active]: isActive,
                 })
               }
+              id="cart"
             >
               <FontAwesomeIcon icon={faCartShopping} />
               Cart
@@ -117,11 +124,11 @@ export function Layout() {
               </span>
             </NavLink>
           </div>
-          <Button className={styles["exit"]} onClick={logout}>
+          <Button className={styles["exit"]} onClick={logout} id="logout-btn">
             <FontAwesomeIcon icon={faPowerOff} /> Exit
           </Button>
         </div>
-        <div className={styles["content"]}>
+        <div className={styles["content"]} data-test="shop-content">
           <Outlet />
         </div>
       </div>

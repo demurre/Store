@@ -22,7 +22,7 @@ function CartItem(props: CartItemProps) {
   };
 
   return (
-    <div className={styles["item"]}>
+    <div className={styles["item"]} id="cart-item">
       <div
         className={styles["image"]}
         style={{ backgroundImage: `url('${props.image}')` }}
@@ -32,20 +32,26 @@ function CartItem(props: CartItemProps) {
         <div className={styles["price"]}>{props.price}&nbsp;$</div>
       </div>
       <div className={styles["actions"]}>
-        <button className={styles["minus"]} onClick={descrease}>
+        <button
+          className={styles["minus"]}
+          onClick={descrease}
+          id="decrease-btn"
+        >
           <FontAwesomeIcon
             style={{ color: "var(--primary-color)" }}
             icon={faMinus}
           />
         </button>
-        <div className={styles["number"]}>{props.count}</div>
-        <button className={styles["plus"]} onClick={increase}>
+        <div className={styles["number"]} id="item-count">
+          {props.count}
+        </div>
+        <button className={styles["plus"]} onClick={increase} id="increase-btn">
           <FontAwesomeIcon
             style={{ color: "var(--white-color)" }}
             icon={faPlus}
           />
         </button>
-        <button className={styles["remove"]} onClick={remove}>
+        <button className={styles["remove"]} onClick={remove} id="remove-btn">
           <FontAwesomeIcon
             style={{ color: "var(--primary-color)" }}
             icon={faXmark}

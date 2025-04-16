@@ -26,7 +26,7 @@ export function Product() {
       <Suspense fallback={<>Loading...</>}>
         <Await resolve={data}>
           {({ data }: { data: ProductInterface }) => (
-            <div className={styles.product}>
+            <div className={styles.product} id="product-content">
               <img
                 className={styles.imageContainer}
                 src={data.image}

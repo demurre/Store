@@ -4,7 +4,7 @@ import styles from "./MenuList.module.css";
 
 export function MenuList({ products }: MenuListProps) {
   return (
-    <div className={styles["wrapper"]}>
+    <div className={styles["wrapper"]} data-test="menu-list">
       {products.map((p) => (
         <ProductCard
           key={p.id}

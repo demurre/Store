@@ -69,7 +69,7 @@ export function Cart() {
         </div>
       </div>
       <div className={styles["checkout"]}>
-        <Button appearence="big" onClick={checkout}>
+        <Button appearence="big" onClick={checkout} id="checkout-btn">
           Checkout
         </Button>
       </div>

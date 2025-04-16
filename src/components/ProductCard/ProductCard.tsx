@@ -26,7 +26,11 @@ function ProductCard(props: ProductCardProps) {
           <div className={styles["price"]}>
             {props.price} &nbsp;<span className={styles["currency"]}>$</span>
           </div>
-          <button className={styles["add-to-cart"]} onClick={add}>
+          <button
+            className={styles["add-to-cart"]}
+            onClick={add}
+            id="add-to-cart"
+          >
             <FontAwesomeIcon
               style={{ color: "var(--white-color)" }}
               icon={faBasketShopping}
@@ -39,7 +43,9 @@ function ProductCard(props: ProductCardProps) {
         </div>
         <div className={styles["card-content"]}>
           <div className={styles["footer"]}>
-            <div className={styles["title"]}>{props.title}</div>
+            <div className={styles["title"]} id="product-title">
+              {props.title}
+            </div>
             <div className={styles["description"]}>{props.description}</div>
           </div>
         </div>

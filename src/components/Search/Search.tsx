@@ -17,6 +17,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(function Input(
           [styles["invalid"]]: isValid,
         })}
         {...props}
+        id="search-input"
       />
       <FontAwesomeIcon className={styles["icon"]} icon={faMagnifyingGlass} />
     </div>

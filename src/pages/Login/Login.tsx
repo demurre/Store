@@ -28,7 +28,7 @@ export function Login() {
   }
 
   return (
-    <div className={styles["login"]}>
+    <div className={styles["login"]} id="login">
       <Auth
         supabaseClient={supaClient}
         appearance={{

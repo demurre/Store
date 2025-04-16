@@ -5,7 +5,7 @@ import styles from "./Success.module.css";
 export function Success() {
   const navigate = useNavigate();
   return (
-    <div className={styles["success"]}>
+    <div className={styles["success"]} id="success">
       {/* <img
         src="/user.png"
         alt="image"
@@ -16,7 +16,7 @@ export function Success() {
       <div className={styles["text"]}>
         Your order has been successfully placed!
       </div>
-      <Button appearence="big" onClick={() => navigate("/")}>
+      <Button appearence="big" onClick={() => navigate("/")} id="success-btn">
         Create new order
       </Button>
     </div>
