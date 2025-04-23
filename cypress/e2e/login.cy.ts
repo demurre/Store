@@ -1,13 +1,16 @@
 describe("Login tests", () => {
-  it("Login success", () => {
+  beforeEach(() => {
     cy.visit("/");
+  });
+
+  it("Login success", () => {
     cy.get("#email").type("123@gmail.com");
     cy.get("#password").type("123123");
     cy.get("button").click();
     cy.getDataTest("shop-layout").should("exist");
   });
+
   it("Login failed", () => {
-    cy.visit("/");
     cy.get("#email").type("123@gmail.com");
     cy.get("#password").type("12312");
     cy.get("button").click();
@@ -15,8 +18,8 @@ describe("Login tests", () => {
       .contains(/Invalid login credentials/i)
       .should("exist");
   });
-  it.only("Logout", () => {
-    cy.visit("/");
+
+  it("Logout", () => {
     cy.get("#email").type("123@gmail.com");
     cy.get("#password").type("123123");
     cy.get("button").click();
