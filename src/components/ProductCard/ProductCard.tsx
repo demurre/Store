@@ -1,19 +1,20 @@
+// ProductCard.tsx
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import { ProductCardProps } from "./ProductCard.props";
 import { MouseEvent } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispath } from "../../store/store";
-import { cartActions } from "../../store/cart.slice";
+import { AppDispatch } from "../../store/store";
+import { add } from "../../store/cart.slice"; // Import specific action
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 
 function ProductCard(props: ProductCardProps) {
-  const dispatch = useDispatch<AppDispath>();
+  const dispatch = useDispatch<AppDispatch>(); // Fixed spelling
 
-  const add = (e: MouseEvent) => {
+  const addToCart = (e: MouseEvent) => {
     e.preventDefault();
-    dispatch(cartActions.add(props.id));
+    dispatch(add(props.id)); // Use directly imported action
   };
 
   return (
@@ -28,7 +29,7 @@ function ProductCard(props: ProductCardProps) {
           </div>
           <button
             className={styles["add-to-cart"]}
-            onClick={add}
+            onClick={addToCart}
             id="add-to-cart"
           >
             <FontAwesomeIcon

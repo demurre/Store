@@ -1,3 +1,4 @@
+// cart.slice.ts
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { loadState } from "./storage";
 import type { Draft } from "immer";
@@ -29,18 +30,14 @@ export const cartSlice = createSlice({
     },
     remove: (state: Draft<CartState>, action: PayloadAction<number>) => {
       const existed = state.items.find((i) => i.id === action.payload);
-      if (!existed) {
-        return;
-      }
+      if (!existed) return;
+
       if (existed.count === 1) {
         state.items = state.items.filter((i) => i.id !== action.payload);
       } else {
-        state.items = state.items.map((i) => {
-          if (i.id === action.payload) {
-            return { ...i, count: i.count - 1 };
-          }
-          return i;
-        });
+        state.items = state.items.map((i) =>
+          i.id === action.payload ? { ...i, count: i.count - 1 } : i
+        );
       }
     },
     add: (state: Draft<CartState>, action: PayloadAction<number>) => {
@@ -49,23 +46,13 @@ export const cartSlice = createSlice({
         state.items.push({ id: action.payload, count: 1 });
         return;
       }
-      state.items = state.items.map((i) => {
-        if (i.id === action.payload) {
-          return { ...i, count: i.count + 1 };
-        }
-        return i;
-      });
+      state.items = state.items.map((i) =>
+        i.id === action.payload ? { ...i, count: i.count + 1 } : i
+      );
     },
   },
 });
 
-// Explicitly type the actions
-type CartActions = {
-  clean: () => void;
-  delete: (id: number) => void;
-  remove: (id: number) => void;
-  add: (id: number) => void;
-};
-
+// Properly typed action exports
+export const { clean, delete: deleteItem, remove, add } = cartSlice.actions;
 export default cartSlice.reducer;
-export const cartActions = cartSlice.actions as CartActions;

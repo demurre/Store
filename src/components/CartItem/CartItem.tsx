@@ -1,24 +1,26 @@
+// CartItem.tsx
 import styles from "./CartItem.module.css";
 import { useDispatch } from "react-redux";
-import { AppDispath } from "../../store/store";
-import { cartActions } from "../../store/cart.slice";
+import { AppDispatch } from "../../store/store";
+import { add, remove, deleteItem } from "../../store/cart.slice"; // Import individual actions
 import { CartItemProps } from "./CartItem.props";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function CartItem(props: CartItemProps) {
-  const dispatch = useDispatch<AppDispath>();
+  const dispatch = useDispatch<AppDispatch>(); // Fixed spelling
 
   const increase = () => {
-    dispatch(cartActions.add(props.id));
+    dispatch(add(props.id)); // Use directly imported action
   };
 
-  const descrease = () => {
-    dispatch(cartActions.remove(props.id));
+  const decrease = () => {
+    // Fixed typo in function name
+    dispatch(remove(props.id));
   };
 
-  const remove = () => {
-    dispatch(cartActions.delete(props.id));
+  const removeFromCart = () => {
+    dispatch(deleteItem(props.id));
   };
 
   return (
@@ -34,7 +36,7 @@ function CartItem(props: CartItemProps) {
       <div className={styles["actions"]}>
         <button
           className={styles["minus"]}
-          onClick={descrease}
+          onClick={decrease} // Fixed function name
           id="decrease-btn"
         >
           <FontAwesomeIcon
@@ -51,7 +53,11 @@ function CartItem(props: CartItemProps) {
             icon={faPlus}
           />
         </button>
-        <button className={styles["remove"]} onClick={remove} id="remove-btn">
+        <button
+          className={styles["remove"]}
+          onClick={removeFromCart}
+          id="remove-btn"
+        >
           <FontAwesomeIcon
             style={{ color: "var(--primary-color)" }}
             icon={faXmark}
