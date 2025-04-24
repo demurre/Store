@@ -33,5 +33,6 @@ jobs:
           start: pnpm dev
           wait-on: "http://localhost:5173"
           wait-on-timeout: 60
-          install: false
-          build: false
+          browser: chrome
+        env:
+          NODE_ENV: test
