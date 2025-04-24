@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { loadState } from "./storage";
+import type { Draft } from "immer";
 
 export const CART_PERSISTENT_STATE = "cartData";
 
@@ -20,13 +21,13 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    clean: (state) => {
+    clean: (state: Draft<CartState>) => {
       state.items = [];
     },
-    delete: (state, action: PayloadAction<number>) => {
+    delete: (state: Draft<CartState>, action: PayloadAction<number>) => {
       state.items = state.items.filter((i) => i.id !== action.payload);
     },
-    remove: (state, action: PayloadAction<number>) => {
+    remove: (state: Draft<CartState>, action: PayloadAction<number>) => {
       const existed = state.items.find((i) => i.id === action.payload);
       if (!existed) {
         return;
@@ -34,24 +35,23 @@ export const cartSlice = createSlice({
       if (existed.count === 1) {
         state.items = state.items.filter((i) => i.id !== action.payload);
       } else {
-        state.items.map((i) => {
+        state.items = state.items.map((i) => {
           if (i.id === action.payload) {
-            i.count -= 1;
+            return { ...i, count: i.count - 1 };
           }
           return i;
         });
-        return;
       }
     },
-    add: (state, action: PayloadAction<number>) => {
+    add: (state: Draft<CartState>, action: PayloadAction<number>) => {
       const existed = state.items.find((i) => i.id === action.payload);
       if (!existed) {
         state.items.push({ id: action.payload, count: 1 });
         return;
       }
-      state.items.map((i) => {
+      state.items = state.items.map((i) => {
         if (i.id === action.payload) {
-          i.count += 1;
+          return { ...i, count: i.count + 1 };
         }
         return i;
       });
@@ -59,5 +59,13 @@ export const cartSlice = createSlice({
   },
 });
 
+// Explicitly type the actions
+type CartActions = {
+  clean: () => void;
+  delete: (id: number) => void;
+  remove: (id: number) => void;
+  add: (id: number) => void;
+};
+
 export default cartSlice.reducer;
-export const cartActions = cartSlice.actions;
+export const cartActions = cartSlice.actions as CartActions;

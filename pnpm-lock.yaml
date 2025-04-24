@@ -35,6 +35,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      immer:
+        specifier: ^10.1.1
+        version: 10.1.1
       install:
         specifier: ^0.13.0
         version: 0.13.0
