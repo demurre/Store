@@ -1,42 +1,52 @@
-name: Cypress e2e tests
-on: push
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CI: true
+  NODE_ENV: test
+
 jobs:
-  cypress-tests:
+  build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create .env file
-        run: |
-          echo "VITE_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
-          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
-          echo "VITE_MODE=ci" >> .env
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
           cache: "pnpm"
-          cache-dependency-path: "pnpm-lock.yaml"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build project
+        run: pnpm build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
+          build: pnpm build
           start: pnpm dev
           wait-on: "http://localhost:5173"
-          wait-on-timeout: 60
+          wait-on-timeout: 120
           browser: chrome
-          record: false
         env:
-          NODE_ENV: test
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}

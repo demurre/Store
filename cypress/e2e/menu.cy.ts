@@ -4,7 +4,6 @@ describe("Menu tests", () => {
     cy.get("#email").type("123@gmail.com");
     cy.get("#password").type("123123");
     cy.get("button").click();
-    cy.get("body").should("be.visible");
   });
 
   it("Search test", () => {

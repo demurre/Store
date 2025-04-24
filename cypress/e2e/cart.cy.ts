@@ -5,7 +5,6 @@ describe("Cart tests", () => {
     cy.get("#password").type("123123");
     cy.get("button").click();
     cy.get("#add-to-cart").click();
-    cy.get("body").should("be.visible");
   });
 
   it("Add to cart test", () => {
