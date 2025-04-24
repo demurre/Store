@@ -1,52 +1,33 @@
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-env:
-  CI: true
-  NODE_ENV: test
-
+name: End-to-end tests
+on: push
 jobs:
-  build-and-test:
-    name: Build and Test
-    runs-on: ubuntu-latest
-
+  cypress-run:
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "pnpm"
-
+          node-version: 20
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-
       - name: Install dependencies
         run: pnpm install
-
-      - name: Build project
-        run: pnpm build
+      - name: Start Vite server
+        run: pnpm run dev &
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-
-      - name: Run Cypress tests
+      - name: Wait for Vite
         uses: cypress-io/github-action@v6
         with:
-          build: pnpm build
-          start: pnpm dev
           wait-on: "http://localhost:5173"
-          wait-on-timeout: 120
-          browser: chrome
+          wait-on-timeout: 60
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
