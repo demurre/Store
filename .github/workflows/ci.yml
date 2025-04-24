@@ -5,10 +5,6 @@ on: push
 jobs:
   cypress-tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,8 +27,11 @@ jobs:
       - name: Build application
         run: pnpm build
 
-      - name: Start server and run Cypress
-        run: |
-          pnpm dev &  # start server in background
-          pnpm wait-on http://localhost:5173  # wait for server
-          pnpm cypress run  # run tests
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: pnpm dev
+          wait-on: "http://localhost:5173"
+          wait-on-timeout: 60
+          install: false
+          build: false
