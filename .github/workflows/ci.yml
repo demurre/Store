@@ -9,6 +9,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          echo "VITE_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
+          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+          echo "VITE_MODE=ci" >> .env
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -36,3 +42,6 @@ jobs:
           browser: chrome
         env:
           NODE_ENV: test
+          # These will be available to Cypress tests too:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}

@@ -39,3 +39,10 @@
 Cypress.Commands.add("getDataTest", (dataTestSelector) => {
   return cy.get(`[data-test="${dataTestSelector}"]`);
 });
+
+// cypress/support/commands.js
+Cypress.Commands.add("setupSupabase", () => {
+  const supabaseUrl = Cypress.env("VITE_SUPABASE_URL");
+  const supabaseKey = Cypress.env("VITE_SUPABASE_ANON_KEY");
+  // Initialize Supabase client
+});
