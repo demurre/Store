@@ -19,7 +19,7 @@ jobs:
       - name: Start Vite server
         run: pnpm run dev &
         env:
-          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       - name: Wait for Vite
         uses: cypress-io/github-action@v6
@@ -29,5 +29,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
-          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
