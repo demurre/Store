@@ -1,22 +1,33 @@
-name: example-basic-pnpm
+name: Cypress e2e tests
+
 on: push
+
 jobs:
   basic-pnpm:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
-      - name: Install Node.js
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
-          cache-dependency-path: examples/basic-pnpm/pnpm-lock.yaml
-      - name: Cypress run
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          working-directory: examples/basic-pnpm
+          start: pnpm dev
+          wait-on: "http://localhost:5173"
+          wait-on-timeout: 60
