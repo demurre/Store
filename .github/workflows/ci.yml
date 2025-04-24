@@ -1,12 +1,39 @@
-name: End-to-end tests
-on: push
+name: Cypress e2e Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
-  cypress-run:
-    runs-on: ubuntu-24.04
+  install-and-test:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build app
+        run: pnpm build
+
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6
+        with:
+          start: pnpm dev
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 60
