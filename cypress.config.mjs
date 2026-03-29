@@ -2,7 +2,8 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:5173",
+    experimentalRunAllSpecs: true,
+    baseUrl: "https://demurre-store.vercel.app/",
     setupNodeEvents(on, config) {
       on("before:browser:launch", (browser = {}, args) => {
         console.log("browser", browser);

@@ -1,17 +1,16 @@
+import { mobileNavPage } from "../pages/MobileNavPage";
+
 describe("Mobile nav tests", () => {
-  context("Phone resolution", () => {
+  context("Phone resolution (Samsung S10)", () => {
     beforeEach(() => {
-      cy.viewport("samsung-s10");
-      cy.visit("/");
-      cy.get("#email").type("123@gmail.com");
-      cy.get("#password").type("123123");
-      cy.get("button").click();
+      mobileNavPage.setViewport("samsung-s10");
+      cy.login("test_acc@example.com", "t3stPass!");
     });
 
-    it("Displays mobile menu on click", () => {
-      cy.getDataTest("sidebar").should("not.be.visible");
-      cy.get("#burger-btn").click();
-      cy.getDataTest("sidebar").should("be.visible");
+    it("Sidebar hidden by default, shown after burger click", () => {
+      mobileNavPage.assertSidebarHidden();
+      mobileNavPage.openBurgerMenu();
+      mobileNavPage.assertSidebarVisible();
     });
   });
 });

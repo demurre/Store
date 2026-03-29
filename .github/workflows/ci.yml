@@ -1,5 +1,8 @@
 name: End-to-end tests
-on: push
+on:
+  push:
+  schedule:
+    - cron: "0 0 */5 * *"
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
@@ -16,18 +19,5 @@ jobs:
           version: 8
       - name: Install dependencies
         run: pnpm install
-      - name: Start Vite server
-        run: pnpm run dev &
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      - name: Wait for Vite
-        uses: cypress-io/github-action@v6
-        with:
-          wait-on: "http://localhost:5173"
-          wait-on-timeout: 60
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}

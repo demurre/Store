@@ -1,22 +1,31 @@
+import { signUpPage } from "../pages/SignUpPage";
+import {
+  generateRandomEmail,
+  generateRandomPassword,
+} from "../support/helpers";
+
 describe("Sign up tests", () => {
   beforeEach(() => {
-    cy.visit("/");
-    cy.get("a")
-      .contains(/Don't have/i)
-      .click();
+    signUpPage.visit();
   });
 
-  it("Sign up test", () => {
-    cy.get("#email").type("123123@gmail.com");
-    cy.get("#password").type("123123");
-    cy.get("button").click();
-    cy.getDataTest("shop-layout").should("exist");
+  it("Sign up with random credentials succeeds", () => {
+    const email = generateRandomEmail();
+    const password = generateRandomPassword();
+
+    signUpPage.signUp(email, password);
+    signUpPage.assertSignUpSuccess();
   });
 
-  it("Sign up test error", () => {
-    cy.get("#email").type("123@gmail.com");
-    cy.get("#password").type("123123");
-    cy.get("button").click();
-    cy.get("span").contains(/User already registered/i);
+  it("Sign up via custom command", () => {
+    cy.signUpRandom().then(({ email, password }) => {
+      cy.log(`Created user: ${email} / ${password}`);
+    });
+    signUpPage.assertSignUpSuccess();
+  });
+
+  it("Sign up fails with already-registered email", () => {
+    signUpPage.signUp("test_acc@example.com", "t3stPass!");
+    signUpPage.assertSignUpError(/User already registered/i);
   });
 });

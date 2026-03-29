@@ -1,30 +1,24 @@
+import { loginPage } from "../pages/LoginPage";
+
 describe("Login tests", () => {
   beforeEach(() => {
-    cy.visit("/");
+    loginPage.visit();
   });
 
   it("Login success", () => {
-    cy.get("#email").type("123@gmail.com");
-    cy.get("#password").type("123123");
-    cy.get("button").click();
-    cy.getDataTest("shop-layout").should("exist");
+    loginPage.login("test_acc@example.com", "t3stPass!");
+    loginPage.assertLoginSuccess();
   });
 
-  it("Login failed", () => {
-    cy.get("#email").type("123@gmail.com");
-    cy.get("#password").type("12312");
-    cy.get("button").click();
-    cy.get("span")
-      .contains(/Invalid login credentials/i)
-      .should("exist");
+  it("Login failed – wrong password", () => {
+    loginPage.login("test_acc@example.com", "12312");
+    loginPage.assertLoginError(/Invalid login credentials/i);
   });
 
   it("Logout", () => {
-    cy.get("#email").type("123@gmail.com");
-    cy.get("#password").type("123123");
-    cy.get("button").click();
-    cy.getDataTest("shop-layout").should("exist");
+    loginPage.login("test_acc@example.com", "t3stPass!");
+    loginPage.assertLoginSuccess();
     cy.get("#logout-btn").click();
-    cy.get("#login").should("exist");
+    loginPage.assertLoginPageVisible();
   });
 });

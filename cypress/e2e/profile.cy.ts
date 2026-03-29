@@ -1,14 +1,31 @@
+import { profilePage } from "../pages/ProfilePage";
+
+const defaultEmail = "test_acc@example.com";
+const defaultName = "test_acc";
+const updatedEmail = "test_acc1@testmail.com";
+const updatedName = "test_acc1";
+
 describe("Profile tests", () => {
-  it("Change name", () => {
-    cy.visit("/");
-    cy.get("#email").type("123@gmail.com");
-    cy.get("#password").type("123123");
-    cy.get("button").click();
-    cy.get("#profile").click();
-    cy.wait(2000).get("input#username").clear().type("test");
-    cy.get("#save-btn").click();
-    cy.get("#message").contains(/Profile updated successfully/i);
-    cy.wait(2000).reload();
-    cy.getDataTest("sidebar").contains(/test/i);
+  beforeEach(() => {
+    cy.login("test_acc@example.com", "t3stPass!");
+    profilePage.open();
+  });
+
+  it("Change display name, email and avatar, then restore", () => {
+    profilePage.uploadImage("thumbnail.png");
+    profilePage.assertImageUploadSuccess();
+
+    profilePage.setUsername(updatedName);
+    profilePage.setEmail(updatedEmail);
+    profilePage.save();
+    profilePage.assertUpdateSuccess();
+    profilePage.assertSidebarName(updatedName);
+
+    profilePage.open();
+    profilePage.setUsername(defaultName);
+    profilePage.setEmail(defaultEmail);
+    profilePage.save();
+    profilePage.assertUpdateSuccess();
+    profilePage.assertSidebarName(defaultName);
   });
 });
